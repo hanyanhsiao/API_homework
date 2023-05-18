@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>multiple marker</title>
+    <style>
+        #map {
+            width: 800px;
+            height: 600px;
+            margin: auto;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="map"></div>
+    <script async
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLsDtOuDkS49O2Bagurz_NwAZWNVv-V8k&callback=initMap"></script>
+    <script>
+        const locations = [
+            { lat: 25.045072778134383, lng: 121.54506446648513 },
+            { lat: 25.04441181243919, lng: 121.55326129747918 },
+            { lat: 25.04017377126977, lng: 121.5542483504261 },
+            { lat: 25.037825565923697, lng: 121.5500476972106 },
+            { lat: 25.044124373691858, lng: 121.54373914198764 }
+        ];
+
+        const pos_name = ['大阪香料咖哩', '天菜咖哩', 'TAKEOUT CURRY SHOP 咖哩專門店', '畬室法式巧克力甜點創作 YU CHOCOLATIER', '佐藤咖哩 復興店']
+
+        // Initialize and add the map
+        function initMap() {
+            // The location of Uluru   25.04137252177618, 121.55049728559904
+            const burn = { lat: 25.04137252177618, lng: 121.55049728559904 };
+            const img = 'img/placeholder.png';
+
+            // The map, centered at Uluru
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 15,
+                center: burn,
+            });
+
+            for (let i = 0; i < locations.length; i++) {
+                const marker = new google.maps.Marker({
+                    position: locations[i],
+                    map: map,
+                    title: pos_name[i],
+                    icon: img
+                });
+
+                const infowindow = new google.maps.InfoWindow({
+                    content: pos_name[i],
+                    ariaLabel: pos_name[i],
+                });
+
+                marker.addListener("click", () => {
+                    infowindow.open({
+                        anchor: marker,
+                        map,
+                    });
+                });
+
+            }
+        }
+
+        window.initMap = initMap;
+
+    </script>
+
+</body>
+
+</html>
